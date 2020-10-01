@@ -227,6 +227,51 @@ if fn.has('nvim') == 1 then
         return type(object)
     end
 
+    local List
+
+    local list_methods = {
+        add = function(self, item)
+            table.insert(self, item)
+        end,
+        insert = function(self, item, position)
+            if position then
+                if position > #self then position = #self end
+                if position < 0 then position = 0 end
+                table.insert(self, position + 1, item)
+            else
+                table.insert(self, 1, item)
+            end
+        end,
+    }
+
+    local list_getters = {
+        _type = function()
+            return 'list'
+        end,
+    }
+
+    function List(tbl)
+        local list = {}
+        for _, v in ipairs(tbl) do
+            table.insert(list, v)
+        end
+        local mt = {}
+        function mt.__index(_, key)
+            if list_methods[key] then return list_methods[key] end
+            if list_getters[key] then return list_getters[key](tbl) end
+        end
+        function mt.__newindex(_, key, value)
+            if type(key) == 'number' then list[key] = value end
+            return
+        end
+        function mt.__call()
+            return ipairs(list)
+        end
+        return setmetatable(list, mt)
+    end
+
+    vim.list = List
+
     local Dict
 
     local dict_getters = {

@@ -39,6 +39,32 @@ local w = vim.window()
 -- print(vim.type({}))
 -- print(vim.type('str'))
 
+
+local l = vim.list({1, test = 2, 3})
+-- print(l[2])
+-- print(l.test)
+-- print(vim.type(l))
+-- print(#l)
+-- for k, v in l() do
+--     print(k, v)
+-- end
+-- table.insert(l, 4)
+-- table.insert(l, 2, 2)
+-- table.insert(l, 2, 2)
+-- print(l[2])
+-- print(l[4])
+-- print(vim.inspect(l))
+-- table.remove(l, 4)
+-- print(vim.inspect(l))
+-- l.test = 'hello'
+-- print(l.test)
+-- l:add(4)
+-- l:insert('test', 1)
+-- l:insert('test2')
+-- for k, v in l() do
+--     print(k, v)
+-- end
+
 local d = vim.dict({1, test = 2, 3})
 -- print(d.test)
 -- print(d['test'])
