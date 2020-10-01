@@ -30,7 +30,7 @@ if fn.has('nvim') == 1 then
         name = function(bufnr)
             return fn.bufname(bufnr)
         end,
-        type = function()
+        _type = function()
             return 'buffer'
         end,
     }
@@ -109,7 +109,7 @@ if fn.has('nvim') == 1 then
         height = function(winnr)
             return api.nvim_win_get_height(winnr)
         end,
-        type = function()
+        _type = function()
             return 'window'
         end,
     }
@@ -164,7 +164,7 @@ if fn.has('nvim') == 1 then
 
     vim.type = function(object)
         if type(object) ~= 'table' then return type(object) end
-        if object.type then return object.type end
+        if object._type then return object._type end
         return type(object)
     end
 end
