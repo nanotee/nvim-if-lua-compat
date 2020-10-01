@@ -36,8 +36,8 @@ Maintain some amount compatibility with the existing Vim interface for Lua (see 
     - [x] `b.fname`
     - [x] `b.number`
     - [x] `b:insert(newline[, pos])`
-    - [ ] `b:next()`
-    - [ ] `b:previous()`
+    - [x] `b:next()`
+    - [x] `b:previous()`
     - [x] `b:isvalid()`
 - [x] `vim.window()`
     - [x] `w()`
@@ -46,8 +46,8 @@ Maintain some amount compatibility with the existing Vim interface for Lua (see 
     - [x] `w.col` (get and set)
     - [x] `w.width` (get and set)
     - [x] `w.height` (get and set)
-    - [ ] `w:next()`
-    - [ ] `w:previous()`
+    - [x] `w:next()`
+    - [x] `w:previous()`
     - [x] `w:isvalid()`
 - [x] `vim.type()`
     - [ ] `list`

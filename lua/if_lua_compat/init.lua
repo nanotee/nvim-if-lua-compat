@@ -7,6 +7,8 @@ if fn.has('nvim') == 1 then
     vim.eval = api.nvim_eval
     vim.line = api.nvim_get_current_line
 
+    local Buffer
+
     local buf_methods = {
         insert = function(self, newline, pos)
             api.nvim_buf_set_lines(self.number, pos or -1, pos or -1, false, {newline})
@@ -14,10 +16,36 @@ if fn.has('nvim') == 1 then
         isvalid = function(self)
             return api.nvim_buf_is_valid(self.number)
         end,
-        -- next = function(self)
-        -- end,
-        -- previous = function(self)
-        -- end,
+        next = function(self)
+            local bufnr = self.number
+            local buffers = api.nvim_list_bufs()
+            local next_buf
+            for k, v in ipairs(buffers) do
+                if v == bufnr then
+                    next_buf = k + 1
+                    break
+                end
+            end
+            if next_buf and buffers[next_buf] then
+                return Buffer(buffers[next_buf])
+            end
+            return nil
+        end,
+        previous = function(self)
+            local bufnr = self.number
+            local buffers = api.nvim_list_bufs()
+            local prev_buf
+            for k, v in ipairs(buffers) do
+                if v == bufnr then
+                    prev_buf = k - 1
+                    break
+                end
+            end
+            if prev_buf and buffers[prev_buf] then
+                return Buffer(buffers[prev_buf])
+            end
+            return nil
+        end,
     }
 
     local buf_getters = {
@@ -35,7 +63,7 @@ if fn.has('nvim') == 1 then
         end,
     }
 
-    local function Buffer(arg)
+    function Buffer(arg)
         local buffers = api.nvim_list_bufs()
         local bufnr
         if arg then
@@ -83,14 +111,42 @@ if fn.has('nvim') == 1 then
         return Buffer(bufnr)
     end
 
+    local Window
+
     local win_methods = {
         isvalid = function(self)
             return api.nvim_win_is_valid(self.number)
         end,
-        -- next = function(self)
-        -- end,
-        -- previous = function(self)
-        -- end,
+        next = function(self)
+            local winnr = self._winnr
+            local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
+            local next_win
+            for k, v in ipairs(windows) do
+                if v == winnr then
+                    next_win = k + 1
+                    break
+                end
+            end
+            if next_win and windows[next_win] then
+                return Window(next_win)
+            end
+            return nil
+        end,
+        previous = function(self)
+            local winnr = self._winnr
+            local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
+            local prev_win
+            for k, v in ipairs(windows) do
+                if v == winnr then
+                    prev_win = k - 1
+                    break
+                end
+            end
+            if prev_win and windows[prev_win] then
+                return Window(prev_win)
+            end
+            return nil
+        end,
     }
 
     local win_getters = {
@@ -112,6 +168,9 @@ if fn.has('nvim') == 1 then
         _type = function()
             return 'window'
         end,
+        _winnr = function(winnr)
+            return winnr
+        end,
     }
 
     local win_setters = {
@@ -129,7 +188,7 @@ if fn.has('nvim') == 1 then
         end,
     }
 
-    local function Window(arg)
+    function Window(arg)
         local windows = api.nvim_tabpage_list_wins(0)
         if type(arg) == 'number' and not windows[arg] then
             return nil
