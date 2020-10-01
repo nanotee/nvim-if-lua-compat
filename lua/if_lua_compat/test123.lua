@@ -10,8 +10,10 @@ local b = vim.buffer({})
 -- print(b:isvalid())
 -- print(b:next())
 -- print(b:previous())
+-- b.type = 'window'
+-- print(vim.type(b))
 
-local w = vim.window(13)
+local w = vim.window()
 -- w()
 -- print(w.buffer.name)
 -- print(w.line)
@@ -25,3 +27,10 @@ local w = vim.window(13)
 -- w:next()
 -- w:previous()
 -- print(w:isvalid())
+-- w.type = 'buffer'
+-- print(vim.type(w))
+
+
+-- print(vim.type(3))
+-- print(vim.type({}))
+-- print(vim.type('str'))

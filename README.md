@@ -49,7 +49,12 @@ Maintain some amount compatibility with the existing Vim interface for Lua (see 
     - [ ] `w:next()`
     - [ ] `w:previous()`
     - [x] `w:isvalid()`
-- [ ] `vim.type()`
+- [x] `vim.type()`
+    - [ ] `list`
+    - [ ] `dict`
+    - [ ] `funcref`
+    - [x] `buffer`
+    - [x] `window`
 - [x] `vim.command()` (alias to `vim.api.nvim_command()`)
 - [x] `vim.eval()` (alias to `vim.api.nvim_eval()`)
 - [x] `vim.line()` (alias to `vim.api.nvim_get_current_line()`)

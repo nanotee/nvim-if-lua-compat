@@ -30,6 +30,9 @@ if fn.has('nvim') == 1 then
         name = function(bufnr)
             return fn.bufname(bufnr)
         end,
+        type = function()
+            return 'buffer'
+        end,
     }
 
     local function Buffer(arg)
@@ -57,6 +60,9 @@ if fn.has('nvim') == 1 then
             end
             if buf_methods[key] then return buf_methods[key] end
             if buf_getters[key] then return buf_getters[key](bufnr) end
+        end
+        function mt.__newindex()
+            return
         end
         function mt.__call()
             api.nvim_set_current_buf(bufnr)
@@ -103,6 +109,9 @@ if fn.has('nvim') == 1 then
         height = function(winnr)
             return api.nvim_win_get_height(winnr)
         end,
+        type = function()
+            return 'window'
+        end,
     }
 
     local win_setters = {
@@ -142,6 +151,7 @@ if fn.has('nvim') == 1 then
         end
         function mt.__newindex(_, key, value)
             if win_setters[key] then return win_setters[key](winnr, value) end
+            return error(('Invalid window property: %s'):format(key))
         end
         function mt.__call()
             api.nvim_set_current_win(winnr)
@@ -151,4 +161,10 @@ if fn.has('nvim') == 1 then
     end
 
     vim.window = Window
+
+    vim.type = function(object)
+        if type(object) ~= 'table' then return type(object) end
+        if object.type then return object.type end
+        return type(object)
+    end
 end
