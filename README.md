@@ -30,7 +30,7 @@ Maintain some amount compatibility with the existing Vim interface for Lua (see 
     - [x] `f(...)`
 - [x] `vim.buffer()`
     - [x] `b()`
-    - [ ] `#b` (does LuaJIT/Lua 5.1 have a `__len` metamethod?)
+    - [x] `#b` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `b[k]`
     - [x] `b.name`
     - [x] `b.fname`

@@ -67,7 +67,7 @@ if fn.has('nvim') == 1 then
         function mt.__call()
             api.nvim_set_current_buf(bufnr)
         end
-        -- Doesn't work?
+        -- Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions
         function mt.__len()
             return api.nvim_buf_line_count(bufnr)
         end
