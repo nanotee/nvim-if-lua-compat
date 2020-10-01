@@ -226,4 +226,28 @@ if fn.has('nvim') == 1 then
         if object._type then return object._type end
         return type(object)
     end
+
+    local Dict
+
+    local dict_getters = {
+        _type = function()
+            return 'dict'
+        end,
+    }
+
+    function Dict(tbl)
+        local mt = {}
+        function mt.__index(_, key)
+            if dict_getters[key] then return dict_getters[key](tbl) end
+        end
+        function mt.__call()
+            return pairs(tbl)
+        end
+        function mt.__len()
+            return vim.tbl_count(tbl)
+        end
+        return setmetatable(tbl, mt)
+    end
+
+    vim.dict = Dict
 end

@@ -17,10 +17,10 @@ Maintain some amount compatibility with the existing Vim interface for Lua (see 
     - [ ] `table.remove(l, position)`
     - [ ] `l:add(item)`
     - [ ] `l:insert(item[, pos])`
-- [ ] `vim.dict()`
-    - [ ] `#d`
-    - [ ] `d.key` or `d['key']`
-    - [ ] `d()`
+- [x] `vim.dict()` (actually a Lua table, `luaeval()` just makes a copy and transforms it into a Vim dict...)
+    - [x] `#d` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
+    - [x] `d.key` or `d['key']`
+    - [x] `d()`
 - [ ] `vim.blob()`
     - [ ] `#b`
     - [ ] `b[k]`
@@ -51,12 +51,12 @@ Maintain some amount compatibility with the existing Vim interface for Lua (see 
     - [x] `w:isvalid()`
 - [x] `vim.type()`
     - [ ] `list`
-    - [ ] `dict`
+    - [x] `dict`
     - [ ] `funcref`
     - [x] `buffer`
     - [x] `window`
 - [x] `vim.command()` (alias to `vim.api.nvim_command()`)
-- [x] `vim.eval()` (alias to `vim.api.nvim_eval()`)
+- [x] `vim.eval()` (alias to `vim.api.nvim_eval()`, doesn't actually return a `vim.list/dict/funcref`)
 - [x] `vim.line()` (alias to `vim.api.nvim_get_current_line()`)
 - [ ] `vim.beep()`
 - [x] `vim.open()`

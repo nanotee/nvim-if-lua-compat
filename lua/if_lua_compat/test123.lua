@@ -38,3 +38,14 @@ local w = vim.window()
 -- print(vim.type(3))
 -- print(vim.type({}))
 -- print(vim.type('str'))
+
+local d = vim.dict({1, test = 2, 3})
+-- print(d.test)
+-- print(d['test'])
+-- print(d[1])
+-- print(d[2])
+-- for k, v in d() do
+--     print(k, v)
+-- end
+-- print(#d)
+-- print(vim.type(d))
