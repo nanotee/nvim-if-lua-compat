@@ -4,7 +4,7 @@ An `if_lua` compatibility layer for Neovim (WIP, needs testing)
 
 ## Goals
 
-Maintain some amount compatibility with the existing Vim interface for Lua (see also: [neovim/neovim#12537](https://github.com/neovim/neovim/issues/12537)). Some features might not be possible to implement (AFAIK Neovim doesn't have a Blob data type)
+Maintain some amount of compatibility with the existing Vim interface for Lua (see also: [neovim/neovim#12537](https://github.com/neovim/neovim/issues/12537)). Some features might not be possible to implement (AFAIK Neovim doesn't have a Blob data type)
 
 ## Progress
 
