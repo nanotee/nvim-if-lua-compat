@@ -45,8 +45,8 @@ local l = vim.list({1, test = 2, 3})
 -- print(l.test)
 -- print(vim.type(l))
 -- print(#l)
--- for k, v in l() do
---     print(k, v)
+-- for v in l() do
+--     print(v)
 -- end
 -- table.insert(l, 4)
 -- table.insert(l, 2, 2)

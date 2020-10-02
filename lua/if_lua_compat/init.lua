@@ -265,7 +265,13 @@ function List(tbl)
         return
     end
     function mt.__call()
-        return ipairs(list)
+        local index = 0
+        local function list_iter()
+            local _, v = next(list, index)
+            index = index + 1
+            return v
+        end
+        return list_iter, list, nil
     end
     return setmetatable(list, mt)
 end
