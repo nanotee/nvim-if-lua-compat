@@ -297,5 +297,7 @@ end
 vim.dict = Dict
 
 vim.beep = function()
+    local belloff = api.nvim_get_option('belloff')
+    if belloff:match('all') or belloff:match('lang') then return end
     io.write('\a')
 end
