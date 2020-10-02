@@ -52,6 +52,7 @@ Maintain some amount of compatibility with the existing Vim interface for Lua (s
 - [x] `vim.type()`
     - [x] `list`
     - [x] `dict`
+    - [ ] `blob`
     - [ ] `funcref`
     - [x] `buffer`
     - [x] `window`
