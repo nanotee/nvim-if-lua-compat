@@ -58,9 +58,6 @@ local buf_getters = {
     name = function(bufnr)
         return fn.bufname(bufnr)
     end,
-    _type = function()
-        return 'buffer'
-    end,
 }
 
 function Buffer(arg)
@@ -82,6 +79,9 @@ function Buffer(arg)
     end
 
     local mt = {}
+
+    mt.type = 'buffer'
+
     function mt.__index(_, key)
         if type(key) == 'number' then
             return api.nvim_buf_get_lines(bufnr, key - 1, key, false)[1]
@@ -118,7 +118,7 @@ local win_methods = {
         return api.nvim_win_is_valid(self.number)
     end,
     next = function(self)
-        local winnr = self._winnr
+        local winnr = getmetatable(self).winnr
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
         local next_win
         for k, v in ipairs(windows) do
@@ -133,7 +133,7 @@ local win_methods = {
         return nil
     end,
     previous = function(self)
-        local winnr = self._winnr
+        local winnr = getmetatable(self).winnr
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
         local prev_win
         for k, v in ipairs(windows) do
@@ -164,12 +164,6 @@ local win_getters = {
     end,
     height = function(winnr)
         return api.nvim_win_get_height(winnr)
-    end,
-    _type = function()
-        return 'window'
-    end,
-    _winnr = function(winnr)
-        return winnr
     end,
 }
 
@@ -204,6 +198,10 @@ function Window(arg)
     end
 
     local mt = {}
+
+    mt.type = 'window'
+    mt.winnr = winnr
+
     function mt.__index(_, key)
         if win_methods[key] then return win_methods[key] end
         if win_getters[key] then return win_getters[key](winnr) end
@@ -222,9 +220,8 @@ end
 vim.window = Window
 
 vim.type = function(object)
-    if type(object) ~= 'table' then return type(object) end
-    if object._type then return object._type end
-    return type(object)
+    local mt = getmetatable(object) or {}
+    return mt.type or type(object)
 end
 
 local List
@@ -244,21 +241,17 @@ local list_methods = {
     end,
 }
 
-local list_getters = {
-    _type = function()
-        return 'list'
-    end,
-}
-
 function List(tbl)
     local list = {}
     for _, v in ipairs(tbl) do
         table.insert(list, v)
     end
     local mt = {}
+
+    mt.type = 'list'
+
     function mt.__index(_, key)
         if list_methods[key] then return list_methods[key] end
-        if list_getters[key] then return list_getters[key](tbl) end
     end
     function mt.__newindex(_, key, value)
         if type(key) == 'number' then list[key] = value end
@@ -280,17 +273,11 @@ vim.list = List
 
 local Dict
 
-local dict_getters = {
-    _type = function()
-        return 'dict'
-    end,
-}
-
 function Dict(tbl)
     local mt = {}
-    function mt.__index(_, key)
-        if dict_getters[key] then return dict_getters[key](tbl) end
-    end
+
+    mt.type = 'dict'
+
     function mt.__call()
         return pairs(tbl)
     end

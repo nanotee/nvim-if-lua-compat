@@ -1,5 +1,5 @@
 -- require('if_lua_compat')
-local b = vim.buffer(105)
+local b = vim.buffer()
 -- b()
 -- print(#b)
 -- print(b[154])
@@ -10,7 +10,6 @@ local b = vim.buffer(105)
 -- print(b:isvalid())
 -- print(b:next())
 -- print(b:previous())
--- b._type = 'window'
 -- print(vim.type(b))
 -- print(b:next().name)
 -- print(b:previous().name)
@@ -19,7 +18,7 @@ local w = vim.window()
 -- w()
 -- print(w.buffer.name)
 -- print(w.line)
--- w.line = 92
+-- w.line = 20
 -- print(w.col)
 -- w.col = 3
 -- print(w.width)
@@ -29,7 +28,6 @@ local w = vim.window()
 -- w:next()
 -- w:previous()
 -- print(w:isvalid())
--- w._type = 'buffer'
 -- print(vim.type(w))
 -- print(w:next().height)
 -- print(w:previous().line)
