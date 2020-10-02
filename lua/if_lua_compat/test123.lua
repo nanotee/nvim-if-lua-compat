@@ -75,3 +75,5 @@ local d = vim.dict({1, test = 2, 3})
 -- end
 -- print(#d)
 -- print(vim.type(d))
+
+-- vim.beep()

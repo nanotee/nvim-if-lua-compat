@@ -58,7 +58,7 @@ Maintain some amount of compatibility with the existing Vim interface for Lua (s
 - [x] `vim.command()` (alias to `vim.api.nvim_command()`)
 - [x] `vim.eval()` (alias to `vim.api.nvim_eval()`, doesn't actually return a `vim.list/dict/funcref`)
 - [x] `vim.line()` (alias to `vim.api.nvim_get_current_line()`)
-- [ ] `vim.beep()`
+- [x] `vim.beep()`
 - [x] `vim.open()`
 - [x] `vim.call()` (in Neovim core)
 - [x] `vim.fn()` (in Neovim core)

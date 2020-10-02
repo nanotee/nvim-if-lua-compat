@@ -295,3 +295,7 @@ function Dict(tbl)
 end
 
 vim.dict = Dict
+
+vim.beep = function()
+    io.write('\a')
+end
