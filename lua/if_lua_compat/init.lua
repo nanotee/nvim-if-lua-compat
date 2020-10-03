@@ -243,8 +243,10 @@ local list_methods = {
 
 function List(tbl)
     local list = {}
-    for _, v in ipairs(tbl) do
-        table.insert(list, v)
+    if tbl then
+        for _, v in ipairs(tbl) do
+            table.insert(list, v)
+        end
     end
     local mt = {}
 
@@ -274,17 +276,18 @@ vim.list = List
 local Dict
 
 function Dict(tbl)
+    local dict = tbl or {}
     local mt = {}
 
     mt.type = 'dict'
 
     function mt.__call()
-        return pairs(tbl)
+        return pairs(dict)
     end
     function mt.__len()
-        return vim.tbl_count(tbl)
+        return vim.tbl_count(dict)
     end
-    return setmetatable(tbl, mt)
+    return setmetatable(dict, mt)
 end
 
 vim.dict = Dict
