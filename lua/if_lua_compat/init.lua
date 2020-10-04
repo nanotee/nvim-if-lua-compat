@@ -2,6 +2,7 @@ local fn = vim.fn
 if fn.has('nvim') == 0 then return end
 
 local api = vim.api
+local validate = vim.validate
 
 vim.command = api.nvim_command
 vim.eval = api.nvim_eval
@@ -242,6 +243,10 @@ local list_methods = {
 }
 
 function List(tbl)
+    validate {
+        tbl = {tbl, 'table', true}
+    }
+
     local list = {}
     if tbl then
         for _, v in ipairs(tbl) do
@@ -276,6 +281,10 @@ vim.list = List
 local Dict
 
 function Dict(tbl)
+    validate {
+        tbl = {tbl, 'table', true}
+    }
+
     local dict = tbl or {}
     local mt = {}
 
