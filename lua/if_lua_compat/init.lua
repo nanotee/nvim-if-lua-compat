@@ -242,8 +242,6 @@ vim.type = function(object)
     return mt.type or type(object)
 end
 
-local List
-
 local list_methods = {
     add = function(self, item)
         table.insert(self, item)
@@ -259,7 +257,25 @@ local list_methods = {
     end,
 }
 
-function List(tbl)
+local list_mt = {
+    __index = list_methods,
+    __newindex = function(list, key, value)
+        if type(key) == 'number' then list[key] = value end
+        return
+    end,
+    __call = function(list)
+        local index = 0
+        local function list_iter()
+            local _, v = next(list, index)
+            index = index + 1
+            return v
+        end
+        return list_iter, list, nil
+    end,
+    type = 'list',
+}
+
+function vim.list(tbl)
     validate {
         tbl = {tbl, 'table', true}
     }
@@ -270,53 +286,23 @@ function List(tbl)
             table.insert(list, v)
         end
     end
-    local mt = {}
-
-    mt.type = 'list'
-
-    function mt.__index(_, key)
-        if list_methods[key] then return list_methods[key] end
-    end
-    function mt.__newindex(_, key, value)
-        if type(key) == 'number' then list[key] = value end
-        return
-    end
-    function mt.__call()
-        local index = 0
-        local function list_iter()
-            local _, v = next(list, index)
-            index = index + 1
-            return v
-        end
-        return list_iter, list, nil
-    end
-    return setmetatable(list, mt)
+    return setmetatable(list, list_mt)
 end
 
-vim.list = List
+local dict_mt = {
+    __call = pairs,
+    __len = vim.tbl_count,
+    type = 'dict',
+}
 
-local Dict
-
-function Dict(tbl)
+function vim.dict(tbl)
     validate {
         tbl = {tbl, 'table', true}
     }
 
     local dict = tbl or {}
-    local mt = {}
-
-    mt.type = 'dict'
-
-    function mt.__call()
-        return pairs(dict)
-    end
-    function mt.__len()
-        return vim.tbl_count(dict)
-    end
-    return setmetatable(dict, mt)
+    return setmetatable(dict, dict_mt)
 end
-
-vim.dict = Dict
 
 vim.beep = function()
     local belloff = api.nvim_get_option('belloff')
