@@ -1,4 +1,4 @@
--- require('if_lua_compat')
+require('if_lua_compat')
 local b = vim.buffer()
 -- b()
 -- print(#b)
@@ -73,5 +73,8 @@ local d = vim.dict({1, test = 2, 3})
 -- end
 -- print(#d)
 -- print(vim.type(d))
+-- d[4] = 4
+-- print(d['4'], d[4])
+-- d[true] = 1
 
--- vim.beep()
+vim.beep()
