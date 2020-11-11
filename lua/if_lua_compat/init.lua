@@ -112,20 +112,10 @@ vim.open = function(fname)
         string = true,
     }
     fname = valid_types[type(fname)] and tostring(fname) or nil
-    if fn.bufexists(fname) == 1 then
-        return Buffer(fn.bufnr(fname))
-    end
 
-    local bufnr = api.nvim_create_buf(true, false)
-    if fname then
-        if fn.filereadable(fname) == 1 then
-            api.nvim_buf_call(bufnr, function()
-                vim.cmd(('edit! %s' ):format(fname))
-            end)
-        else
-            api.nvim_buf_set_name(bufnr, fname)
-        end
-    end
+    local bufnr = fn.bufadd(fname or '')
+    api.nvim_buf_set_option(bufnr, 'buflisted', true)
+
     return Buffer(bufnr)
 end
 

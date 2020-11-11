@@ -78,3 +78,10 @@ local d = vim.dict({1, test = 2, 3})
 -- d[true] = 1
 
 vim.beep()
+
+-- vim.open('init.lua')
+-- vim.open('not_a_file')
+-- vim.open(1)
+-- vim.open()
+-- vim.open(true)
+-- vim.open({})
