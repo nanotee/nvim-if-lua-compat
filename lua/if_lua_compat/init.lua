@@ -106,12 +106,13 @@ end
 
 vim.buffer = Buffer
 
+local valid_fname_types = {
+    number = true,
+    string = true,
+}
+
 vim.open = function(fname)
-    local valid_types = {
-        number = true,
-        string = true,
-    }
-    fname = valid_types[type(fname)] and tostring(fname) or nil
+    fname = valid_fname_types[type(fname)] and tostring(fname) or nil
 
     local bufnr = fn.bufadd(fname or '')
     api.nvim_buf_set_option(bufnr, 'buflisted', true)
