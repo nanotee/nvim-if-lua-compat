@@ -1,5 +1,8 @@
 local validate = vim.validate
 
+--- Wrapper class to interact with vim dictionaries
+--- @class Dict
+
 local valid_key_types = {
     string = true,
     number = true,
@@ -23,6 +26,8 @@ local dict_mt = {
     type = 'dict',
 }
 
+--- @param tbl table
+--- @return Dict
 function Dict(tbl)
     validate {
         tbl = {tbl, 'table', true}

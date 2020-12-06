@@ -1,8 +1,18 @@
 local validate = vim.validate
+
+--- Wrapper class to interact with vim lists
+--- @class List
+
 local list_methods = {
+    --- @param self List
+    --- @param item any
     add = function(self, item)
         table.insert(self, item)
     end,
+
+    --- @param self     List
+    --- @param item     any
+    --- @param position number
     insert = function(self, item, position)
         if position then
             if position > #self then position = #self end
@@ -32,6 +42,8 @@ local list_mt = {
     type = 'list',
 }
 
+--- @param tbl table
+--- @return List
 function List(tbl)
     validate {
         tbl = {tbl, 'table', true}

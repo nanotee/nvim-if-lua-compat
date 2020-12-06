@@ -1,12 +1,20 @@
 local api = vim.api
 local Buffer = require('if_lua_compat.buffer')
 
+--- Wrapper to interact with windows
+--- @class Window
+
 local Window
 
 local win_methods = {
+    --- @param self Window
+    --- @return boolean
     isvalid = function(self)
         return api.nvim_win_is_valid(self.number)
     end,
+
+    --- @param self Window
+    --- @return Window|nil
     next = function(self)
         local winnr = getmetatable(self).winnr
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
@@ -22,6 +30,9 @@ local win_methods = {
         end
         return nil
     end,
+
+    --- @param self Window
+    --- @return Window|nil
     previous = function(self)
         local winnr = getmetatable(self).winnr
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
@@ -40,38 +51,65 @@ local win_methods = {
 }
 
 local win_getters = {
+    --- @param winnr number
+    --- @return Buffer
     buffer = function(winnr)
         return Buffer(api.nvim_win_get_buf(winnr))
     end,
+
+    --- @param winnr number
+    --- @return number
     line = function(winnr)
         return api.nvim_win_get_cursor(winnr)[1]
     end,
+
+    --- @param winnr number
+    --- @return number
     col = function(winnr)
         return api.nvim_win_get_cursor(winnr)[2] + 1
     end,
+
+    --- @param winnr number
+    --- @return number
     width = function(winnr)
         return api.nvim_win_get_width(winnr)
     end,
+
+    --- @param winnr number
+    --- @return number
     height = function(winnr)
         return api.nvim_win_get_height(winnr)
     end,
 }
 
 local win_setters = {
+    --- @param winnr number
+    --- @param line  number
     line = function(winnr, line)
-        return api.nvim_win_set_cursor(winnr, {line, 0})
+        api.nvim_win_set_cursor(winnr, {line, 0})
     end,
+
+    --- @param winnr number
+    --- @param col   number
     col = function(winnr, col)
-        return api.nvim_win_set_cursor(winnr, {api.nvim_win_get_cursor(winnr)[1], col - 1})
+        api.nvim_win_set_cursor(winnr, {api.nvim_win_get_cursor(winnr)[1], col - 1})
     end,
+
+    --- @param winnr number
+    --- @param width number
     width = function(winnr, width)
-        return api.nvim_win_set_width(winnr, width)
+        api.nvim_win_set_width(winnr, width)
     end,
+
+    --- @param winnr  number
+    --- @param height number
     height = function(winnr, height)
-        return api.nvim_win_set_height(winnr, height)
+        api.nvim_win_set_height(winnr, height)
     end,
 }
 
+--- @param arg ?string|number|boolean|table
+--- @return Window|nil
 function Window(arg)
     local windows = api.nvim_tabpage_list_wins(0)
     if type(arg) == 'number' and not windows[arg] then

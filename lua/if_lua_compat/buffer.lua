@@ -1,15 +1,27 @@
 local api = vim.api
 local fn = vim.fn
 
+--- Wrapper to interact with buffers
+--- @class Buffer
+
 local Buffer
 
 local buf_methods = {
+    --- @param self    Buffer
+    --- @param newline string
+    --- @param pos     number
     insert = function(self, newline, pos)
         api.nvim_buf_set_lines(self.number, pos or -1, pos or -1, false, {newline})
     end,
+
+    --- @param self Buffer
+    --- @return boolean
     isvalid = function(self)
         return api.nvim_buf_is_valid(self.number)
     end,
+
+    --- @param self Buffer
+    --- @return Buffer|nil
     next = function(self)
         local bufnr = self.number
         local buffers = api.nvim_list_bufs()
@@ -25,6 +37,9 @@ local buf_methods = {
         end
         return nil
     end,
+
+    --- @param self Buffer
+    --- @return Buffer|nil
     previous = function(self)
         local bufnr = self.number
         local buffers = api.nvim_list_bufs()
@@ -43,17 +58,27 @@ local buf_methods = {
 }
 
 local buf_getters = {
+    --- @param bufnr number
+    --- @return number
     number = function(bufnr)
         return bufnr
     end,
+
+    --- @param bufnr number
+    --- @return string
     fname = function(bufnr)
         return api.nvim_buf_get_name(bufnr)
     end,
+
+    --- @param bufnr number
+    --- @return string
     name = function(bufnr)
         return fn.bufname(bufnr)
     end,
 }
 
+--- @param arg ?string|number|boolean|table
+--- @return Buffer|nil
 function Buffer(arg)
     local buffers = api.nvim_list_bufs()
     local bufnr

@@ -7,6 +7,8 @@ local valid_fname_types = {
     string = true,
 }
 
+--- @param fname ?any
+--- @return Buffer
 local function vim_open(fname)
     fname = valid_fname_types[type(fname)] and tostring(fname) or nil
 
@@ -16,6 +18,8 @@ local function vim_open(fname)
     return Buffer(bufnr)
 end
 
+--- @param object any
+--- @return string
 local function vim_type(object)
     local mt = getmetatable(object) or {}
     return mt.type or type(object)
