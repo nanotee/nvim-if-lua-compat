@@ -6,6 +6,9 @@ local Buffer = require('if_lua_compat.buffer')
 
 local Window
 
+--- Use a table reference as a key to make certain fields inaccessible outside of the module
+local private_winnr = {}
+
 local win_methods = {
     --- @param self Window
     --- @return boolean
@@ -16,7 +19,7 @@ local win_methods = {
     --- @param self Window
     --- @return Window|nil
     next = function(self)
-        local winnr = getmetatable(self).winnr
+        local winnr = self[private_winnr]
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
         local next_win
         for k, v in ipairs(windows) do
@@ -34,7 +37,7 @@ local win_methods = {
     --- @param self Window
     --- @return Window|nil
     previous = function(self)
-        local winnr = getmetatable(self).winnr
+        local winnr = self[private_winnr]
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
         local prev_win
         for k, v in ipairs(windows) do
@@ -108,6 +111,22 @@ local win_setters = {
     end,
 }
 
+local win_mt = {
+    type = 'window',
+    __index = function(tbl, key)
+        if win_methods[key] then return win_methods[key] end
+        if win_getters[key] then return win_getters[key](tbl[private_winnr]) end
+    end,
+    __newindex = function(tbl, key, value)
+        if win_setters[key] then return win_setters[key](tbl[private_winnr], value)
+        else error(('Invalid window property: %s'):format(key))
+        end
+    end,
+    __call = function(tbl)
+        api.nvim_set_current_win(tbl[private_winnr])
+    end,
+}
+
 --- @param arg ?string|number|boolean|table
 --- @return Window|nil
 function Window(arg)
@@ -125,24 +144,7 @@ function Window(arg)
         winnr = api.nvim_get_current_win()
     end
 
-    local mt = {}
-
-    mt.type = 'window'
-    mt.winnr = winnr
-
-    function mt.__index(_, key)
-        if win_methods[key] then return win_methods[key] end
-        if win_getters[key] then return win_getters[key](winnr) end
-    end
-    function mt.__newindex(_, key, value)
-        if win_setters[key] then return win_setters[key](winnr, value) end
-        return error(('Invalid window property: %s'):format(key))
-    end
-    function mt.__call()
-        api.nvim_set_current_win(winnr)
-    end
-
-    return setmetatable({}, mt)
+    return setmetatable({[private_winnr] = winnr}, win_mt)
 end
 
 return Window
