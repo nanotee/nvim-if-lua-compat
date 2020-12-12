@@ -127,7 +127,7 @@ local win_mt = {
     end,
 }
 
---- @param arg ?string|number|boolean|table
+--- @param arg ?any
 --- @return Window|nil
 function Window(arg)
     local windows = api.nvim_tabpage_list_wins(0)

@@ -99,7 +99,7 @@ local buf_mt = {
     end,
 }
 
---- @param arg ?string|number|boolean|table
+--- @param arg ?any
 --- @return Buffer|nil
 function Buffer(arg)
     local buffers = api.nvim_list_bufs()
