@@ -91,3 +91,18 @@ local f = vim.funcref('printf')
 -- local invalid_type = vim.funcref({})
 
 -- f()
+
+local bl = vim.blob('test')
+local bl2 = vim.blob('😀')
+-- print(vim.inspect(bl))
+-- print(vim.inspect(bl2))
+-- local tbl = {}
+-- bl2:add(1.1)
+--
+-- print(vim.inspect(bl2))
+--
+-- for i = 0, #bl2 do
+--     table.insert(tbl, string.char(bl2[i]))
+-- end
+--
+-- print(table.concat(tbl))

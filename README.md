@@ -4,7 +4,7 @@ An `if_lua` compatibility layer for Neovim (WIP, needs testing)
 
 ## Goals
 
-Maintain some amount of compatibility with the existing Vim interface for Lua (see also: [neovim/neovim#12537](https://github.com/neovim/neovim/issues/12537)). Some features might not be possible to implement (AFAIK Neovim doesn't have a Blob data type)
+Maintain some amount of compatibility with the existing Vim interface for Lua (see also: [neovim/neovim#12537](https://github.com/neovim/neovim/issues/12537)).
 
 ## Progress
 
@@ -23,12 +23,12 @@ Items annotated with an asterisk `*` are only partially supported.
     - [x] * `#d` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `d.key` or `d['key']`
     - [x] `d()`
-- [ ] `vim.blob()`
-    - [ ] `#b`
-    - [ ] `b[k]`
-    - [ ] `b:add(bytes)`
+- [x] * `vim.blob()` (actually a Lua table. Neovim doesn't have a built-in "blob" data type, so its usefulness is somewhat limited)
+    - [x] * `#b` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
+    - [x] `b[k]`
+    - [x] `b:add(bytes)`
 - [x] `vim.funcref()` (exists in Neovim core, but the implementation is different here)
-    - * [x] `#f` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
+    - [x] * `#f` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `f(...)`
 - [x] `vim.buffer()`
     - [x] `b()`
@@ -54,7 +54,7 @@ Items annotated with an asterisk `*` are only partially supported.
 - [x] `vim.type()`
     - [x] `list`
     - [x] `dict`
-    - [ ] `blob`
+    - [x] `blob`
     - [x] `funcref`
     - [x] `buffer`
     - [x] `window`

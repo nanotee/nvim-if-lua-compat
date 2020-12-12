@@ -7,6 +7,7 @@ local Buffer = require('if_lua_compat.buffer')
 local Window = require('if_lua_compat.window')
 local List = require('if_lua_compat.list')
 local Dict = require('if_lua_compat.dict')
+local Blob = require('if_lua_compat.blob')
 local misc = require('if_lua_compat.misc')
 
 vim.command = api.nvim_command
@@ -16,6 +17,7 @@ vim.buffer = Buffer
 vim.window = Window
 vim.list = List
 vim.dict = Dict
+vim.blob = Blob
 vim.open = misc.open
 vim.type = misc.type
 vim.beep = misc.beep
