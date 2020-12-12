@@ -27,7 +27,7 @@ local list_methods = {
 local list_mt = {
     __index = list_methods,
     __newindex = function(list, key, value)
-        if type(key) == 'number' then list[key] = value end
+        if type(key) == 'number' then rawset(list, key, value) end
         return
     end,
     __call = function(list)
