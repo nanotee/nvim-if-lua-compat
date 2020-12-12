@@ -8,7 +8,9 @@ Maintain some amount of compatibility with the existing Vim interface for Lua (s
 
 ## Progress
 
-- [x] `vim.list()` (actually a Lua table, `luaeval()` just makes a copy and transforms it into a Vim list...)
+Items annotated with an asterisk `*` are only partially supported.
+
+- [x] * `vim.list()` (actually a Lua table, `luaeval()` just makes a copy and transforms it into a Vim list...)
     - [x] `#l`
     - [x] `l[k]`
     - [x] `l()`
@@ -17,8 +19,8 @@ Maintain some amount of compatibility with the existing Vim interface for Lua (s
     - [x] `table.remove(l, position)`
     - [x] `l:add(item)`
     - [x] `l:insert(item[, pos])`
-- [x] `vim.dict()` (actually a Lua table, `luaeval()` just makes a copy and transforms it into a Vim dict...)
-    - [x] `#d` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
+- [x] * `vim.dict()` (actually a Lua table, `luaeval()` just makes a copy and transforms it into a Vim dict...)
+    - [x] * `#d` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `d.key` or `d['key']`
     - [x] `d()`
 - [ ] `vim.blob()`
@@ -30,7 +32,7 @@ Maintain some amount of compatibility with the existing Vim interface for Lua (s
     - [x] `f(...)`
 - [x] `vim.buffer()`
     - [x] `b()`
-    - [x] `#b` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
+    - [x] * `#b` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `b[k]`
     - [x] `b.name`
     - [x] `b.fname`
@@ -57,7 +59,7 @@ Maintain some amount of compatibility with the existing Vim interface for Lua (s
     - [x] `buffer`
     - [x] `window`
 - [x] `vim.command()` (alias to `vim.api.nvim_command()`)
-- [x] `vim.eval()` (alias to `vim.api.nvim_eval()`, doesn't actually return a `vim.list/dict/funcref`)
+- [x] * `vim.eval()` (alias to `vim.api.nvim_eval()`, doesn't actually return a `vim.list/dict/blob`)
 - [x] `vim.line()` (alias to `vim.api.nvim_get_current_line()`)
 - [x] `vim.beep()`
 - [x] `vim.open()`
