@@ -27,8 +27,8 @@ Items annotated with an asterisk `*` are only partially supported.
     - [ ] `#b`
     - [ ] `b[k]`
     - [ ] `b:add(bytes)`
-- [x] `vim.funcref()` (in Neovim core)
-    - [ ] `#f`
+- [x] `vim.funcref()` (exists in Neovim core, but the implementation is different here)
+    - * [x] `#f` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `f(...)`
 - [x] `vim.buffer()`
     - [x] `b()`
@@ -55,7 +55,7 @@ Items annotated with an asterisk `*` are only partially supported.
     - [x] `list`
     - [x] `dict`
     - [ ] `blob`
-    - [ ] `funcref`
+    - [x] `funcref`
     - [x] `buffer`
     - [x] `window`
 - [x] `vim.command()` (alias to `vim.api.nvim_command()`)

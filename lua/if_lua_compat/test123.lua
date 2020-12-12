@@ -85,3 +85,9 @@ vim.beep()
 -- vim.open()
 -- vim.open(true)
 -- vim.open({})
+
+local f = vim.funcref('printf')
+-- local invalid_f = vim.funcref('ffffff')
+-- local invalid_type = vim.funcref({})
+
+-- f()

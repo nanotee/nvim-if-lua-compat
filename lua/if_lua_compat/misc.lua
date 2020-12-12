@@ -31,8 +31,34 @@ local function vim_beep()
     io.write('\a')
 end
 
+--- Use a table reference as a key to make certain fields inaccessible outside of the module
+local private_funcname = {}
+
+--- Wrapper class to interact with vim funcrefs
+--- @class Funcref
+
+local funcref_mt = {
+    type = 'funcref',
+    __call = function(tbl, ...) return vim.call(tbl[private_funcname], ...) end,
+    -- Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions
+    __len = function(tbl) return tbl[private_funcname] end,
+}
+
+--- @param funcname string
+--- @return Funcref
+local function vim_funcref(funcname)
+    if type(funcname) ~= 'string' then
+        return error(("Bad argument #1 to 'funcref' (string expected, got %s)"):format(type(funcname)))
+    end
+    if fn.exists('*' .. funcname) == 0 then
+        return error(('Unknown function: %s'):format(funcname))
+    end
+    return setmetatable({[private_funcname] = funcname}, funcref_mt)
+end
+
 return {
     open = vim_open,
     type = vim_type,
     beep = vim_beep,
+    funcref = vim_funcref,
 }

@@ -19,3 +19,4 @@ vim.dict = Dict
 vim.open = misc.open
 vim.type = misc.type
 vim.beep = misc.beep
+vim.funcref = misc.funcref
