@@ -24,8 +24,14 @@ local blob_methods = {
     --- @param self Blob
     --- @param bytes_str string|number
     add = function(self, bytes_str)
+        local is_empty = not self[0]
         for _, byte in str_to_bytes(bytes_str) do
-            table.insert(self, byte)
+            if is_empty then
+                table.insert(self, 0, byte)
+                is_empty = false
+            else
+                table.insert(self, byte)
+            end
         end
     end,
 }

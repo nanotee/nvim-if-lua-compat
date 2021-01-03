@@ -94,6 +94,7 @@ local f = vim.funcref('printf')
 
 local bl = vim.blob('test')
 local bl2 = vim.blob('😀')
+local bl3 = vim.blob()
 -- print(vim.inspect(bl))
 -- print(vim.inspect(bl2))
 -- local tbl = {}
@@ -106,3 +107,4 @@ local bl2 = vim.blob('😀')
 -- end
 --
 -- print(table.concat(tbl))
+-- bl3:add('test')
