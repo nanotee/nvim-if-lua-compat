@@ -28,7 +28,7 @@ end
 local function vim_beep()
     local belloff = api.nvim_get_option('belloff')
     if belloff:match('all') or belloff:match('lang') then return end
-    io.write('\a')
+    io.stdout:write('\a')
 end
 
 --- Use a table reference as a key to make certain fields inaccessible outside of the module
