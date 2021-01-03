@@ -32,10 +32,11 @@ local list_mt = {
     end,
     __call = function(list)
         local index = 0
+        local length = #list
         local function list_iter()
-            local _, v = next(list, index)
+            if index == length then return end
             index = index + 1
-            return v
+            return list[index]
         end
         return list_iter, list, nil
     end,
