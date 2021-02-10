@@ -131,17 +131,15 @@ local win_mt = {
 --- @return Window|nil
 function Window(arg)
     local windows = api.nvim_tabpage_list_wins(0)
-    if type(arg) == 'number' and not windows[arg] then
-        return nil
-    end
-
     local winnr
-    if windows[arg] then
-        winnr = windows[arg]
-    elseif arg then
-        winnr = windows[1]
-    else
+
+    if not arg then
         winnr = api.nvim_get_current_win()
+    elseif type(arg) == 'number' then
+        if not windows[arg] then return nil end
+        winnr = windows[arg]
+    else
+        winnr = windows[1]
     end
 
     return setmetatable({[private_winnr] = winnr}, win_mt)
