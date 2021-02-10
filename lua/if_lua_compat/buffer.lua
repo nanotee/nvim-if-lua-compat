@@ -102,21 +102,18 @@ local buf_mt = {
 --- @param arg ?any
 --- @return Buffer|nil
 function Buffer(arg)
-    local buffers = api.nvim_list_bufs()
     local bufnr
-    if arg then
-        bufnr = buffers[1]
-    else
-        bufnr = api.nvim_get_current_buf()
-    end
 
-    if type(arg) == 'string' then
+    if not arg then
+        bufnr = api.nvim_get_current_buf()
+    elseif type(arg) == 'string' then
         bufnr = fn.bufnr(arg)
         if bufnr == -1 then return nil end
-    end
-    if type(arg) == 'number' then
+    elseif type(arg) == 'number' then
         if not api.nvim_buf_is_valid(arg) then return nil end
         bufnr = arg
+    else
+        bufnr = api.nvim_list_bufs()[1]
     end
 
     return setmetatable({[private_bufnr] = bufnr}, buf_mt)
