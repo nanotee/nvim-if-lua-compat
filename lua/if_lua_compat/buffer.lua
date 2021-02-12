@@ -11,19 +11,19 @@ local buf_methods = {
     --- @param newline string
     --- @param pos     number
     insert = function(self, newline, pos)
-        api.nvim_buf_set_lines(self.number, pos or -1, pos or -1, false, {newline})
+        api.nvim_buf_set_lines(self._bufnr, pos or -1, pos or -1, false, {newline})
     end,
 
     --- @param self Buffer
     --- @return boolean
     isvalid = function(self)
-        return api.nvim_buf_is_valid(self.number)
+        return api.nvim_buf_is_valid(self._bufnr)
     end,
 
     --- @param self Buffer
     --- @return Buffer|nil
     next = function(self)
-        local bufnr = self.number
+        local bufnr = self._bufnr
         local buffers = api.nvim_list_bufs()
         local next_buf
         for k, v in ipairs(buffers) do
@@ -41,7 +41,7 @@ local buf_methods = {
     --- @param self Buffer
     --- @return Buffer|nil
     previous = function(self)
-        local bufnr = self.number
+        local bufnr = self._bufnr
         local buffers = api.nvim_list_bufs()
         local prev_buf
         for k, v in ipairs(buffers) do
