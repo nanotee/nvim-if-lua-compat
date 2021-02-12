@@ -10,7 +10,7 @@ local win_methods = {
     --- @param self Window
     --- @return boolean
     isvalid = function(self)
-        return api.nvim_win_is_valid(self.number)
+        return api.nvim_win_is_valid(self._winnr)
     end,
 
     --- @param self Window
