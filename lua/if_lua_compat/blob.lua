@@ -37,7 +37,7 @@ local blob_methods = {
 }
 
 local blob_mt = {
-    type = 'blob',
+    _vim_type = 'blob',
     __index = blob_methods,
     __newindex = function(blob, key, value)
         if type(key) == 'number' then rawset(blob, key, value) end

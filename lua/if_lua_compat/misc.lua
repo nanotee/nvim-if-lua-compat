@@ -22,7 +22,7 @@ end
 --- @return string
 local function vim_type(object)
     local mt = getmetatable(object) or {}
-    return mt.type or type(object)
+    return mt._vim_type or type(object)
 end
 
 local function vim_beep()
@@ -35,7 +35,7 @@ end
 --- @class Funcref
 
 local funcref_mt = {
-    type = 'funcref',
+    _vim_type = 'funcref',
     __call = function(tbl, ...) return vim.call(tbl._funcname, ...) end,
     -- Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions
     __len = function(tbl) return tbl._funcname end,

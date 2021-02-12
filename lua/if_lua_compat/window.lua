@@ -109,7 +109,7 @@ local win_setters = {
 }
 
 local win_mt = {
-    type = 'window',
+    _vim_type = 'window',
     __index = function(tbl, key)
         if win_methods[key] then return win_methods[key] end
         if win_getters[key] then return win_getters[key](tbl._winnr) end

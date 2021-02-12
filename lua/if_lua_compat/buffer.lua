@@ -78,7 +78,7 @@ local buf_getters = {
 }
 
 local buf_mt = {
-    type = 'buffer',
+    _vim_type = 'buffer',
     __index = function(tbl, key)
         if type(key) == 'number' then
             return api.nvim_buf_get_lines(tbl._bufnr, key - 1, key, false)[1]

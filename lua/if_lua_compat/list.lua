@@ -40,7 +40,7 @@ local list_mt = {
         end
         return list_iter, list, nil
     end,
-    type = 'list',
+    _vim_type = 'list',
 }
 
 --- @param tbl table

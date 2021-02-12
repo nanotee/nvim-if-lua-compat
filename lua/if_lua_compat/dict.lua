@@ -23,7 +23,7 @@ local dict_mt = {
     end,
     __call = pairs,
     __len = vim.tbl_count,
-    type = 'dict',
+    _vim_type = 'dict',
 }
 
 --- @param tbl table
