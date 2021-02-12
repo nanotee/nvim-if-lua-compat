@@ -47,9 +47,6 @@ local function vim_funcref(funcname)
     if type(funcname) ~= 'string' then
         return error(("Bad argument #1 to 'funcref' (string expected, got %s)"):format(type(funcname)))
     end
-    if fn.exists('*' .. funcname) == 0 then
-        return error(('Unknown function: %s'):format(funcname))
-    end
     return setmetatable({_funcname = funcname}, funcref_mt)
 end
 
