@@ -6,9 +6,6 @@ local Buffer = require('if_lua_compat.buffer')
 
 local Window
 
---- Use a table reference as a key to make certain fields inaccessible outside of the module
-local private_winnr = {}
-
 local win_methods = {
     --- @param self Window
     --- @return boolean
@@ -19,7 +16,7 @@ local win_methods = {
     --- @param self Window
     --- @return Window|nil
     next = function(self)
-        local winnr = self[private_winnr]
+        local winnr = self._winnr
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
         local next_win
         for k, v in ipairs(windows) do
@@ -37,7 +34,7 @@ local win_methods = {
     --- @param self Window
     --- @return Window|nil
     previous = function(self)
-        local winnr = self[private_winnr]
+        local winnr = self._winnr
         local windows = api.nvim_tabpage_list_wins(api.nvim_win_get_tabpage(winnr))
         local prev_win
         for k, v in ipairs(windows) do
@@ -115,15 +112,15 @@ local win_mt = {
     type = 'window',
     __index = function(tbl, key)
         if win_methods[key] then return win_methods[key] end
-        if win_getters[key] then return win_getters[key](tbl[private_winnr]) end
+        if win_getters[key] then return win_getters[key](tbl._winnr) end
     end,
     __newindex = function(tbl, key, value)
-        if win_setters[key] then return win_setters[key](tbl[private_winnr], value)
+        if win_setters[key] then return win_setters[key](tbl._winnr, value)
         else error(('Invalid window property: %s'):format(key))
         end
     end,
     __call = function(tbl)
-        api.nvim_set_current_win(tbl[private_winnr])
+        api.nvim_set_current_win(tbl._winnr)
     end,
 }
 
@@ -142,7 +139,7 @@ function Window(arg)
         winnr = windows[1]
     end
 
-    return setmetatable({[private_winnr] = winnr}, win_mt)
+    return setmetatable({_winnr = winnr}, win_mt)
 end
 
 return Window

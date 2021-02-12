@@ -6,9 +6,6 @@ local fn = vim.fn
 
 local Buffer
 
---- Use a table reference as a key to make certain fields inaccessible outside of the module
-local private_bufnr = {}
-
 local buf_methods = {
     --- @param self    Buffer
     --- @param newline string
@@ -84,18 +81,18 @@ local buf_mt = {
     type = 'buffer',
     __index = function(tbl, key)
         if type(key) == 'number' then
-            return api.nvim_buf_get_lines(tbl[private_bufnr], key - 1, key, false)[1]
+            return api.nvim_buf_get_lines(tbl._bufnr, key - 1, key, false)[1]
         end
         if buf_methods[key] then return buf_methods[key] end
-        if buf_getters[key] then return buf_getters[key](tbl[private_bufnr]) end
+        if buf_getters[key] then return buf_getters[key](tbl._bufnr) end
     end,
     __newindex = function() return end,
     __call = function(tbl)
-        api.nvim_set_current_buf(tbl[private_bufnr])
+        api.nvim_set_current_buf(tbl._bufnr)
     end,
     -- Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions
     __len = function(tbl)
-        return api.nvim_buf_line_count(tbl[private_bufnr])
+        return api.nvim_buf_line_count(tbl._bufnr)
     end,
 }
 
@@ -116,7 +113,7 @@ function Buffer(arg)
         bufnr = api.nvim_list_bufs()[1]
     end
 
-    return setmetatable({[private_bufnr] = bufnr}, buf_mt)
+    return setmetatable({_bufnr = bufnr}, buf_mt)
 end
 
 return Buffer
