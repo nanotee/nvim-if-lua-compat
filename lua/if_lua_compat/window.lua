@@ -71,15 +71,11 @@ local win_getters = {
 
     --- @param winnr number
     --- @return number
-    width = function(winnr)
-        return api.nvim_win_get_width(winnr)
-    end,
+    width = api.nvim_win_get_width,
 
     --- @param winnr number
     --- @return number
-    height = function(winnr)
-        return api.nvim_win_get_height(winnr)
-    end,
+    height = api.nvim_win_get_height,
 }
 
 local win_setters = {
@@ -97,15 +93,11 @@ local win_setters = {
 
     --- @param winnr number
     --- @param width number
-    width = function(winnr, width)
-        api.nvim_win_set_width(winnr, width)
-    end,
+    width = api.nvim_win_set_width,
 
     --- @param winnr  number
     --- @param height number
-    height = function(winnr, height)
-        api.nvim_win_set_height(winnr, height)
-    end,
+    height = api.nvim_win_set_height,
 }
 
 local win_mt = {

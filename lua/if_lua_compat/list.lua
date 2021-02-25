@@ -6,9 +6,7 @@ local validate = vim.validate
 local list_methods = {
     --- @param self List
     --- @param item any
-    add = function(self, item)
-        table.insert(self, item)
-    end,
+    add = table.insert,
 
     --- @param self     List
     --- @param item     any
@@ -28,7 +26,6 @@ local list_mt = {
     __index = list_methods,
     __newindex = function(list, key, value)
         if type(key) == 'number' then rawset(list, key, value) end
-        return
     end,
     __call = function(list)
         local index = 0

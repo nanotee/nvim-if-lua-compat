@@ -66,15 +66,11 @@ local buf_getters = {
 
     --- @param bufnr number
     --- @return string
-    fname = function(bufnr)
-        return api.nvim_buf_get_name(bufnr)
-    end,
+    fname = api.nvim_buf_get_name,
 
     --- @param bufnr number
     --- @return string
-    name = function(bufnr)
-        return fn.bufname(bufnr)
-    end,
+    name = fn.bufname,
 }
 
 local buf_mt = {
