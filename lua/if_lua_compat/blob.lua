@@ -5,11 +5,11 @@ local Blob
 
 --- @param str string
 --- @param index number
---- @return number, string
+--- @return number, number
 local function str_iter(str, index)
     if index == #str then return end
     index = index + 1
-    return index, str:sub(index, index)
+    return index, str:sub(index, index):byte()
 end
 
 --- @param bytes_str string|number
