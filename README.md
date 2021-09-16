@@ -23,7 +23,7 @@ Items annotated with an asterisk `*` are only partially supported.
     - [x] * `#d` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `d.key` or `d['key']`
     - [x] `d()`
-- [x] * `vim.blob()` (actually a Lua table. Neovim doesn't have a built-in "blob" data type, so its usefulness is somewhat limited)
+- [x] * `vim.blob()` (actually a Lua table)
     - [x] * `#b` (Only works with Lua 5.2+ or LuaJIT built with 5.2 extensions)
     - [x] `b[k]`
     - [x] `b:add(bytes)`
